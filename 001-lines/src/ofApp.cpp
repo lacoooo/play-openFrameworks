@@ -1,10 +1,17 @@
 #include "ofApp.h"
 
-
-
 //--------------------------------------------------------------
 void ofApp::setup(){
-	//ofNoFill();
+    
+	shader.load("shadersGL3/shader");
+
+    int planeWidth = ofGetWidth();
+    int planeHeight = ofGetHeight();
+    int planeGridSize = 20;
+    int planeColums = planeWidth / planeGridSize;
+    int planeRows = planeHeight / planeGridSize;
+    
+    plane.set(planeWidth, planeHeight, planeColums, planeRows, OF_PRIMITIVE_TRIANGLES);
 }
 
 //--------------------------------------------------------------
@@ -14,29 +21,45 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	float cx = ofGetWidth() / 2;
-	float cy = ofGetHeight() / 2;
-	float radius = 300.0;
-	for (int i = 0; i < 100; i+=1) {
-		ofPushMatrix();
-		ofSetColor(ofColor(abs(sin(i + 20.0 + time / 10.0) * 250.0), abs(sin(i + 40.0 + time / 10.0) * 250.0), abs(sin(i + time / 10.0) * 250.0)));
-		ofTranslate(
-			cx + sin((i + time / 10.0) / 4.0) * radius
-			+ sin((i + time / 20.0) * 8.0) * radius / 8.0
-			,
-			cy + cos((i + time / 10.0) / 4.0) * radius
-			+ cos((i + time / 20.0) * 8.0) * radius / 8.0
-		);
-		ofRotate((i + time / 100.0) * 100.0);
-		ofDrawBox(20.0 + sin(i + time / 10.0));
-		ofPopMatrix();
+    
+    shader.begin();
+    
+    // center screen.
+    float cx = ofGetWidth() / 2.0;
+    float cy = ofGetHeight() / 2.0;
+
+    float mx = mouseX - cx;
+    float my = mouseY - cy;
+    
+    shader.setUniform1f("mouseRange", 150);
+    shader.setUniform2f("mousePos", mx, my);
+    
+    float percentX = mouseX / (float)ofGetWidth();
+    percentX = ofClamp(percentX, 0, 1);
+    ofFloatColor colorLeft = ofColor::magenta;
+    ofFloatColor colorRight = ofColor::blue;
+    ofFloatColor colorMix = colorLeft.getLerped(colorRight, percentX);
+    
+    float mouseColor[4] = {colorMix.r, colorMix.g, colorMix.b, colorMix.a};
+    
+    shader.setUniform4fv("mouseColor", mouseColor);
+    
+    ofTranslate(cx, cy);
+
+	for (int i = 0; i < 10; i++) {
+		glPushMatrix();
+		ofRotateX(i + ofGetFrameNum() * 0.1);
+		ofRotateY(i + ofGetFrameNum() * 0.1);
+		ofRotateZ(i + ofGetFrameNum() * 0.1);
+		ofBox(300);
+		glPopMatrix();
 	}
-	time+= 0.1;
+    shader.end();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    
 }
 
 //--------------------------------------------------------------
@@ -45,8 +68,8 @@ void ofApp::keyReleased(int key){
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
+void ofApp::mouseMoved(int x, int y){
+    
 }
 
 //--------------------------------------------------------------
@@ -61,16 +84,6 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
 
 }
 
