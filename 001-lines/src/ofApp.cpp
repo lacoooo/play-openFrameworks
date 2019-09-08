@@ -2,7 +2,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
+	ofSetWindowShape(1000, 1000);
+	ofSetWindowPosition(100, 100);
 	shader.load("shadersGL3/shader");
 
     int planeWidth = ofGetWidth();
@@ -12,7 +13,7 @@ void ofApp::setup(){
     int planeRows = planeHeight / planeGridSize;
     
     plane.set(planeWidth, planeHeight, planeColums, planeRows, OF_PRIMITIVE_TRIANGLES);
-	ofBackground(ofColor(200.0, 200.0, 200.0, 255.0));
+	ofBackground(ofColor(250.0, 250.0, 250.0, 255.0));
 }
 
 //--------------------------------------------------------------
@@ -47,13 +48,13 @@ void ofApp::draw(){
     
     //ofTranslate(cx, cy);
 	ofSetCylinderResolution(200, 200, 2);
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 20; i++) {
 		glPushMatrix();
-		ofRotateX(i + ofGetFrameNum() * 0.01);
-		ofRotateY(i + ofGetFrameNum() * 0.01);
-		ofRotateZ(i + ofGetFrameNum() * 0.01);
-		//ofDrawCylinder(400 - 20 * i, 400 - 20 * i);
-		ofBox(400 - 20 * i);
+		ofRotateX(i + ofGetFrameNum() * 0.07);
+		//ofRotateY(i + ofGetFrameNum() * 0.02);
+		//ofRotateZ(i + ofGetFrameNum() * 0.02);
+		ofDrawCylinder(340 - 20 * i, 340 - 20 * i);
+		//ofBox(430 - 20 * i);
 		glPopMatrix();
 	}
     shader.end();
@@ -62,7 +63,7 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
+	ofSaveFrame(true);
 }
 
 //--------------------------------------------------------------
