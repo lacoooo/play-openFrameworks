@@ -1,5 +1,7 @@
 .vs
 
-bin
+*/bin/*
+
+!*/bin/data/
 
 obj
