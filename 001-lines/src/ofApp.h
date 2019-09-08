@@ -21,4 +21,5 @@ class ofApp : public ofBaseApp{
 
     ofShader shader;
     ofPlanePrimitive plane;
+	ofEasyCam cam;
 };

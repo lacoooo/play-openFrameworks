@@ -12,6 +12,7 @@ void ofApp::setup(){
     int planeRows = planeHeight / planeGridSize;
     
     plane.set(planeWidth, planeHeight, planeColums, planeRows, OF_PRIMITIVE_TRIANGLES);
+	ofBackground(ofColor(200.0, 200.0, 200.0, 255.0));
 }
 
 //--------------------------------------------------------------
@@ -21,7 +22,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    
+	cam.begin();
     shader.begin();
     
     // center screen.
@@ -44,17 +45,19 @@ void ofApp::draw(){
     
     shader.setUniform4fv("mouseColor", mouseColor);
     
-    ofTranslate(cx, cy);
-
+    //ofTranslate(cx, cy);
+	ofSetCylinderResolution(200, 200, 2);
 	for (int i = 0; i < 10; i++) {
 		glPushMatrix();
-		ofRotateX(i + ofGetFrameNum() * 0.1);
-		ofRotateY(i + ofGetFrameNum() * 0.1);
-		ofRotateZ(i + ofGetFrameNum() * 0.1);
-		ofBox(300);
+		ofRotateX(i + ofGetFrameNum() * 0.01);
+		ofRotateY(i + ofGetFrameNum() * 0.01);
+		ofRotateZ(i + ofGetFrameNum() * 0.01);
+		//ofDrawCylinder(400 - 20 * i, 400 - 20 * i);
+		ofBox(400 - 20 * i);
 		glPopMatrix();
 	}
     shader.end();
+	cam.end();
 }
 
 //--------------------------------------------------------------
