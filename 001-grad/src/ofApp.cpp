@@ -5,15 +5,8 @@ void ofApp::setup(){
 	ofSetWindowShape(1000, 1000);
 	ofSetWindowPosition(100, 100);
 	shader.load("shadersGL3/shader");
-
-    int planeWidth = ofGetWidth();
-    int planeHeight = ofGetHeight();
-    int planeGridSize = 20;
-    int planeColums = planeWidth / planeGridSize;
-    int planeRows = planeHeight / planeGridSize;
-    
-    plane.set(planeWidth, planeHeight, planeColums, planeRows, OF_PRIMITIVE_TRIANGLES);
-	ofBackground(ofColor(250.0, 250.0, 250.0, 255.0));
+	ofBackground(ofColor(200.0, 200.0, 200.0, 255.0));
+	ofSetFrameRate(5);
 }
 
 //--------------------------------------------------------------
@@ -47,14 +40,16 @@ void ofApp::draw(){
     shader.setUniform4fv("mouseColor", mouseColor);
     
     //ofTranslate(cx, cy);
-	ofSetCylinderResolution(200, 200, 2);
-	for (int i = 0; i < 20; i++) {
+	ofSetCylinderResolution(200, 10, 1);
+	//ofSetConeResolution(40, 1, 2);
+	for (int i = 0; i < 10; i++) {
 		glPushMatrix();
-		ofRotateX(i + ofGetFrameNum() * 0.07);
-		//ofRotateY(i + ofGetFrameNum() * 0.02);
-		//ofRotateZ(i + ofGetFrameNum() * 0.02);
+		ofRotateX(i + ofGetFrameNum() * 0.02);
+		ofRotateY(i + ofGetFrameNum() * 0.02);
+		ofRotateZ(i + ofGetFrameNum() * 0.02);
 		ofDrawCylinder(340 - 20 * i, 340 - 20 * i);
 		//ofBox(430 - 20 * i);
+		//ofDrawCone(300, 400);
 		glPopMatrix();
 	}
     shader.end();
