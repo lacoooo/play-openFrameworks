@@ -50,11 +50,11 @@ void ofApp::draw(){
 	ofSetCylinderResolution(200, 200, 2);
 	for (int i = 0; i < 20; i++) {
 		glPushMatrix();
-		ofRotateX(i + ofGetFrameNum() * 0.07);
+		//ofRotateX(i + ofGetFrameNum() * 0.07);
 		//ofRotateY(i + ofGetFrameNum() * 0.02);
-		//ofRotateZ(i + ofGetFrameNum() * 0.02);
-		ofDrawCylinder(340 - 20 * i, 340 - 20 * i);
-		//ofBox(430 - 20 * i);
+		ofRotateZ(i + ofGetFrameNum() * 0.02);
+		//ofDrawCylinder(340 - 20 * i, 340 - 20 * i);
+		ofBox(430 - 20 * i);
 		glPopMatrix();
 	}
     shader.end();
